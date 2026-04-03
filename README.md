@@ -1,59 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TaskFlow
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A clean, minimal task management application built with Laravel.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Full CRUD — create, read, update, delete tasks
+- Task statuses: New, In Progress, Completed
+- Search tasks by title
+- Filter tasks by status
+- Pagination (10 per page)
+- Server-side validation with inline error messages
+- Modern dark UI with glassmorphism design system
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2+ / Laravel 11
+- Blade templating
+- SQLite (default) or any Laravel-supported database
 
-## Learning Laravel
+## Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/taskflow.git
+cd taskflow
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# 2. Install dependencies
+composer install
 
-## Laravel Sponsors
+# 3. Environment setup
+cp .env.example .env
+php artisan key:generate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# 4. Configure database
+# SQLite (default — no extra setup needed):
+# Ensure .env has: DB_CONNECTION=sqlite
+# The database file is already at database/database.sqlite
 
-### Premium Partners
+# 5. Run migrations
+php artisan migrate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# 6. Start the server
+php artisan serve
+```
 
-## Contributing
+Visit [http://localhost:8000](http://localhost:8000)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Task Fields
 
-## Code of Conduct
+| Field         | Type      | Notes                               |
+|---------------|-----------|-------------------------------------|
+| `id`          | integer   | Auto-increment primary key          |
+| `title`       | string    | Required, max 255 chars             |
+| `description` | text      | Optional                            |
+| `status`      | enum      | `new` / `in_progress` / `completed` |
+| `created_at`  | timestamp | Auto-managed by Laravel             |
+| `updated_at`  | timestamp | Auto-managed by Laravel             |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Project Structure
 
-## Security Vulnerabilities
+```
+app/
+  Http/Controllers/TaskController.php   # CRUD logic with search & filter
+  Models/Task.php                       # Eloquent model with status constants
+database/
+  migrations/                           # Tasks table migration
+resources/views/
+  layouts/app.blade.php                 # Main layout & design system
+  tasks/
+    index.blade.php                     # Task list with search/filter/pagination
+    show.blade.php                      # Task detail page
+    create.blade.php                    # Create form
+    edit.blade.php                      # Edit form
+    _form.blade.php                     # Shared form partial
+routes/
+  web.php                               # Resource routes with root redirect
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Git History
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+chore: initialise Laravel project
+feat(db): add tasks table migration with status enum
+feat(model): add Task model with fillable fields and status constants
+feat(controller): implement TaskController with full CRUD, search, and filter
+feat(routes): register task resource routes with root redirect
+feat(ui): add app layout with custom dark glassmorphism design system
+feat(views): add index, show, create, edit views and shared form partial
+docs: add README with setup instructions and project structure
+```
