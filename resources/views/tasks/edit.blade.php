@@ -3,17 +3,20 @@
 
 @section('content')
 
-<div style="max-width:640px;margin:0 auto;">
+<div style="max-width:620px;margin:0 auto;">
 
     <div class="flex items-center gap-3 mb-6">
         <a href="{{ route('tasks.show', $task) }}" class="btn btn-ghost btn-sm">← Back</a>
         <div>
-            <h1 class="page-heading" style="font-size:1.4rem;">Edit Task</h1>
-            <p class="text-muted text-sm mt-1">#{{ $task->id }} · Last updated {{ $task->updated_at->diffForHumans() }}</p>
+            <h1 class="page-heading-sub">Edit Task</h1>
+            <p class="text-muted text-sm mt-1" style="font-style:italic;">
+                #{{ $task->id }} · Updated {{ $task->updated_at->diffForHumans() }}
+            </p>
         </div>
     </div>
 
     <div class="card">
+        <hr class="gold-line">
         <div class="card-header">Task Details</div>
         <div class="card-body">
             <form method="POST" action="{{ route('tasks.update', $task) }}">
@@ -26,6 +29,7 @@
                 </div>
             </form>
         </div>
+        <hr class="gold-line">
     </div>
 
 </div>
